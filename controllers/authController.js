@@ -45,8 +45,19 @@ const register = async (req, res) => {
 }
 
 // verify email
-const verifyEmail=(req,res)=>{
+const verifyEmail= async(req,res)=>{
     try{
+        // get data from req.body
+        const {email,otp} = req.body
+        // validate user info
+        if(!email || !otp) return responseHandler.error(res,'must provide all information',)
+            const user =await userSchema.findOne({email})
+        if(!user) return responseHandler.error(res,'invalid email or otp',)
+            user.is_verified = true
+            user.otp = null
+            user.otp_expiry = null
+            await user.save()
+            
       // success response
         responseHandler.success(res,201,"email verified successfully",)
     }catch(err){
