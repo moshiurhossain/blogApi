@@ -44,5 +44,18 @@ const register = async (req, res) => {
     }
 }
 
+// verify email
+const verifyEmail=(req,res)=>{
+    try{
+      // success response
+        responseHandler.success(res,201,"email verified successfully",)
+    }catch(err){
+        console.log(err)
+        responseHandler.error(res,'Interneal Server Error!')
+    }
+}
 
-module.exports = {register}
+module.exports = {
+    register,
+    verifyEmail,
+}
