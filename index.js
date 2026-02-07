@@ -4,7 +4,7 @@ const app = express()
 const port = 8000
 const cors = require('cors');
 const dbConfig = require('./db/database');
-const { route } = require('./router/routes');
+const  route  = require('./router/routes');
 require('dotenv').config()
 
 // middleware

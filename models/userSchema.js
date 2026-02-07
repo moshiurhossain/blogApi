@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre('save',async function () {
 
-   if(!this.isModified('password')) return 
+   if(!this.isModified('password')) return ;
 
       try{
          const salt = await bcrypt.genSalt(10)
@@ -25,9 +25,8 @@ userSchema.pre('save',async function () {
          this.password = hashedPassword
      
 
-      }catch(err){
-         console.log(err)
-        
+      }catch(error){
+         throw new Error('Error hashing password')
       }
    
 })

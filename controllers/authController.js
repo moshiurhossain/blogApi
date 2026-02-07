@@ -44,7 +44,7 @@ const register = async (req, res) => {
         responseHandler.success(res,201,"user registered successfully",)
     }catch(err){
         console.log(err)
-        responseHandler.error(res,'Interneal Server Error!',err)
+        responseHandler.error(res,'Interneal Server Error!')
     }
 }
 
