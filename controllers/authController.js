@@ -2,6 +2,7 @@
 
 const userSchema = require("../models/userSchema")
 const { generateOTP, otpExpiryTime } = require("../utilities/generators")
+const { verifyemailTemplate } = require("../utilities/mailTempletes")
 const responseHandler = require("../utilities/responseHandler")
 const sendMail = require("../utilities/sendMail")
 
@@ -33,12 +34,7 @@ const register = async (req, res) => {
         sendMail(
             email,
             "Verify your email - OTP",
-            otp,
-            (secret)=>`
-            <h1>Your OTP for email verification is</h1>
-            <h2>${secret}</h2>
-            <p>This OTP is valid for 5 minutes</p>
-            `
+            verifyemailTemplate(otp,fullname)
         );
         // success response
         responseHandler.success(res,201,"user registered successfully",)

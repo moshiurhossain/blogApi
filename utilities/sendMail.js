@@ -15,12 +15,12 @@ const transporter = nodemailer.createTransport({
 
 // send mail function
 
-const sendMail = async (to, subject, secret, template) => {
+const sendMail = async (to, subject, template) => {
 const info = await transporter.sendMail({
-    from: '"Maddison Foo Koch" <maddison53@ethereal.email>',
+    from: '"BloggersDaily" 1001096@daffodil.ac',
     to: to,
     subject: subject,
-    html: template(secret), // HTML version of the message
+    html: template // HTML version of the message
   });
 
   console.log("Message sent:", info.messageId);

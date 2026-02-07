@@ -1,5 +1,5 @@
 const verifyemailTemplate = (userName,otp) => {
-  `<!DOCTYPE html>
+  return`<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -41,4 +41,8 @@ const verifyemailTemplate = (userName,otp) => {
 </body>
 </html>
 `
+}
+
+module.exports ={
+    verifyemailTemplate,
 }
