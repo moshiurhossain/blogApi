@@ -72,9 +72,16 @@ const userlogin= async(req,res)=>{
         const {email,password} = req.body
         // validate user info
         if(!email || !password) return responseHandler.error(res,'must provide all information',)
-
-            const user = await userSchema.findOne({email})
-            if(!user) return responseHandler.error(res,'invalid email or password',)
+        // look for user with given email
+        const user = await userSchema.findOne({email})
+        // return error if user not found
+        if(!user) return responseHandler.error(res,'invalid email or password',)
+        // retunr error if user is not verified
+        if(!user.is_verified) return responseHandler.error(res,'user is not verified',)
+        // compare password
+        const verifypassword = await userSchema.comparePassword(password)
+        console.log(verifypassword)
+        if(!verifypassword)  return responseHandler.error(res,'invalid credentials',)
         // success response
         responseHandler.success(res,201,"user logged in successfully",)
         }catch(err){
