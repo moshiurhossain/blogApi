@@ -1,7 +1,7 @@
 // libaries
 
 const userSchema = require("../models/userSchema")
-const { generateOTP, otpExpiryTime } = require("../utilities/generators")
+const { generateOTP, otpExpiryTime, generateAccessToken } = require("../utilities/generators")
 const { verifyemailTemplate } = require("../utilities/mailTempletes")
 const responseHandler = require("../utilities/responseHandler")
 const sendMail = require("../utilities/sendMail")
@@ -81,9 +81,18 @@ const userlogin= async(req,res)=>{
         // compare password
         const verifypassword = await user.comparePassword(password)
         console.log(verifypassword)
+        // generate access token
+        const accessToken = generateAccessToken(user._id,user.email,user.role)
+        userInfo ={
+            id:user._id,
+            fullname:user.fullname,
+            email:user.email,
+            role:user.role
+        }
+
         if(!verifypassword)  return responseHandler.error(res,'invalid credentials',)
         // success response
-        responseHandler.success(res,201,"user logged in successfully",)
+        responseHandler.success(res,201,"user logged in successfully",{token:accessToken,userdetails:userInfo})
         }catch(err){
         console.log(err)
         responseHandler.error(res,'Interneal Server Error!')
