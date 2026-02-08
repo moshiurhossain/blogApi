@@ -79,7 +79,7 @@ const userlogin= async(req,res)=>{
         // retunr error if user is not verified
         if(!user.is_verified) return responseHandler.error(res,'user is not verified',)
         // compare password
-        const verifypassword = await userSchema.comparePassword(password)
+        const verifypassword = await user.comparePassword(password)
         console.log(verifypassword)
         if(!verifypassword)  return responseHandler.error(res,'invalid credentials',)
         // success response
