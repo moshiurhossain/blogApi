@@ -65,8 +65,25 @@ const verifyEmail= async(req,res)=>{
         responseHandler.error(res,'Interneal Server Error!')
     }
 }
+// user login
+const userlogin= async(req,res)=>{
+    try{   
+        // get data from req.body
+        const {email,password} = req.body
+        // validate user info
+        if(!email || !password) return responseHandler.error(res,'must provide all information',)
 
+            const user = await userSchema.findOne({email})
+            if(!user) return responseHandler.error(res,'invalid email or password',)
+        // success response
+        responseHandler.success(res,201,"user logged in successfully",)
+        }catch(err){
+        console.log(err)
+        responseHandler.error(res,'Interneal Server Error!')
+    }
+}
 module.exports = {
     register,
     verifyEmail,
+    userlogin,
 }
