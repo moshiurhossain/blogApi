@@ -25,9 +25,23 @@ const generateAccessToken = (id,email,role)=>{
                       });
 }
 
+// generate refresh token
+const generateRefreshToken = (id,email,role)=>{
+    return  jwt.sign({
+                    id,
+                    email,
+                    role
+            },
+                    process.env.JWT_SECRET, 
+                    { 
+                     expiresIn: '1h' 
+    })
+}
+
 // Exporting the function to be used in other modules
 module.exports = {
     generateOTP,
     otpExpiryTime,
     generateAccessToken,
+    generateRefreshToken,
 }
