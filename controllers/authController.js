@@ -43,7 +43,6 @@ const register = async (req, res) => {
         responseHandler.error(res,'Interneal Server Error!')
     }
 }
-
 // verify email
 const verifyEmail= async(req,res)=>{
     try{
@@ -108,8 +107,20 @@ const userlogin= async(req,res)=>{
         responseHandler.error(res,'Interneal Server Error!')
     }
 }
+// forgot password
+const forgotPassword = async(req,res)=>{
+    try{
+          
+        // all ok
+        responseHandler.success(res,201,"password reset otp sent to email successfully",)
+    }catch(err){
+        console.log(err)
+        responseHandler.error(res,'Interneal Server Error!')
+    }
+}
 module.exports = {
     register,
     verifyEmail,
     userlogin,
+    forgotPassword,
 }
