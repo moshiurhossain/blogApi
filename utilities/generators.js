@@ -34,7 +34,7 @@ const generateRefreshToken = (id,email,role)=>{
             },
                     process.env.JWT_SECRET, 
                     { 
-                     expiresIn: '1h' 
+                     expiresIn: '10d' 
     })
 }
 

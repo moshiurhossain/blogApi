@@ -1,7 +1,7 @@
 // libaries
 
 const userSchema = require("../models/userSchema")
-const { generateOTP, otpExpiryTime, generateAccessToken } = require("../utilities/generators")
+const { generateOTP, otpExpiryTime, generateAccessToken, generateRefreshToken } = require("../utilities/generators")
 const { verifyemailTemplate } = require("../utilities/mailTempletes")
 const responseHandler = require("../utilities/responseHandler")
 const sendMail = require("../utilities/sendMail")
@@ -83,6 +83,16 @@ const userlogin= async(req,res)=>{
         console.log(verifypassword)
         // generate access token
         const accessToken = generateAccessToken(user._id,user.email,user.role)
+        const refreshToken = generateRefreshToken(user._id,user.email,user.role)
+
+        res.cookie('accessToken', accessToken, {
+            httpOnly: true,
+            secure: false,
+        }).cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: false,
+        });
+        // user info to be sent in response
         userInfo ={
             id:user._id,
             fullname:user.fullname,
