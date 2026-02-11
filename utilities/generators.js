@@ -37,11 +37,18 @@ const generateRefreshToken = (id,email,role)=>{
                      expiresIn: '10d' 
     })
 }
+// generate reset password token
+const generateResetPasswordToken =()=>{
+    const resetToken = crypto.randomBytes(12).toString('hex')
+    const refreshToken = crypto.createHash('sha256').update(resetToken).digest('hex')
 
+    return {resetToken,refreshToken}
+}
 // Exporting the function to be used in other modules
 module.exports = {
     generateOTP,
     otpExpiryTime,
     generateAccessToken,
     generateRefreshToken,
+    generateResetPasswordToken,
 }

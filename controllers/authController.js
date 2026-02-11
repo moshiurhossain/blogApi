@@ -110,6 +110,10 @@ const userlogin= async(req,res)=>{
 // forgot password
 const forgotPassword = async(req,res)=>{
     try{
+        const {email} = req.body
+        if(!email) return responseHandler.error(res,'must provide email',)
+            const user = await userSchema.findOne({email})
+            if(!user) return responseHandler.error(res,'user not found',)
           
         // all ok
         responseHandler.success(res,201,"password reset otp sent to email successfully",)
