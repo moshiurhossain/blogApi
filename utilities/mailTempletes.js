@@ -68,7 +68,7 @@ const restpasswordTemplate = (userName,resetLink,token,expiryTime)=>{
           <!-- Greeting -->
           <tr>
             <td style="color:#555555; font-size:16px; line-height:24px; padding-bottom:20px;">
-              Hello <strong>{{userName}}</strong>,<br><br>
+              Hello <strong>${userName}</strong>,<br><br>
               We received a request to reset your password. Click the button below to set a new password.
             </td>
           </tr>
@@ -76,7 +76,7 @@ const restpasswordTemplate = (userName,resetLink,token,expiryTime)=>{
           <!-- Button -->
           <tr>
             <td align="center" style="padding:20px 0;">
-              <a href="{{resetLink}}" 
+              <a href="${resetLink}" 
                  style="background-color:#2563eb; color:#ffffff; text-decoration:none; padding:14px 28px; border-radius:6px; font-size:16px; display:inline-block;">
                  Reset Password
               </a>
@@ -88,7 +88,7 @@ const restpasswordTemplate = (userName,resetLink,token,expiryTime)=>{
             <td style="color:#555555; font-size:14px; line-height:22px; padding-top:20px;">
               Or copy and paste this token into the reset page:
               <div style="margin-top:10px; padding:12px; background:#f1f5f9; border-radius:6px; font-family:monospace; font-size:14px; word-break:break-all;">
-                {{token}}
+                ${token}
               </div>
             </td>
           </tr>
@@ -96,7 +96,7 @@ const restpasswordTemplate = (userName,resetLink,token,expiryTime)=>{
           <!-- Expiry Notice -->
           <tr>
             <td style="color:#888888; font-size:13px; padding-top:20px;">
-              This link and token will expire in {{expiryTime}}.
+              This link and token will expire in ${expiryTime}.
             </td>
           </tr>
 
