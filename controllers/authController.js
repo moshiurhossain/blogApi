@@ -1,8 +1,8 @@
 // libaries
 
 const userSchema = require("../models/userSchema")
-const { generateOTP, otpExpiryTime, generateAccessToken, generateRefreshToken } = require("../utilities/generators")
-const { verifyemailTemplate } = require("../utilities/mailTempletes")
+const { generateOTP, otpExpiryTime, generateAccessToken, generateRefreshToken, generateResetPasswordToken } = require("../utilities/generators")
+const { verifyemailTemplate, restpasswordTemplate } = require("../utilities/mailTempletes")
 const responseHandler = require("../utilities/responseHandler")
 const sendMail = require("../utilities/sendMail")
 
@@ -129,7 +129,7 @@ const forgotPassword = async(req,res)=>{
             sendMail(
                 email,
                 "Reset your password - OTP",
-                verifyemailTemplate(resetToken,user.fullname)
+                restpasswordTemplate(user.fullname,restpasswordlink,resetToken,'5 minutes')
             );
         // all ok
         responseHandler.success(res,201,"password reset otp sent to email successfully",{resetToken,refreshToken})

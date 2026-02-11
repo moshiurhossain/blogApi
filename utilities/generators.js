@@ -1,6 +1,6 @@
 // libaies
 const jwt = require('jsonwebtoken');
-
+const crypto = require('crypto');
 // generate a 4 digit OTP
 const generateOTP =()=>{
     return Math.floor( Math.random()*9000).toString();
