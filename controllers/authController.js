@@ -110,13 +110,29 @@ const userlogin= async(req,res)=>{
 // forgot password
 const forgotPassword = async(req,res)=>{
     try{
+        // get data from req.body
         const {email} = req.body
+        // validate user info
         if(!email) return responseHandler.error(res,'must provide email',)
+            // look for user with given email
             const user = await userSchema.findOne({email})
+            // return error if user not found
             if(!user) return responseHandler.error(res,'user not found',)
-          
+            // generate reset password token and save in db
+                const {resetToken,refreshToken} = generateResetPasswordToken()
+                user.resetPasswordToken = refreshToken
+                user.resetPasswordOtp_expiry= otpExpiryTime()
+                await user.save()
+            // create reset password link
+            const restpasswordlink = `${process.env.CLIENT_URL}/#/reset-password?token=${resetToken}`;
+            // send reset password token to user email
+            sendMail(
+                email,
+                "Reset your password - OTP",
+                verifyemailTemplate(resetToken,user.fullname)
+            );
         // all ok
-        responseHandler.success(res,201,"password reset otp sent to email successfully",)
+        responseHandler.success(res,201,"password reset otp sent to email successfully",{resetToken,refreshToken})
     }catch(err){
         console.log(err)
         responseHandler.error(res,'Interneal Server Error!')
