@@ -6,7 +6,8 @@ authApi.post('/register',register)
 authApi.post('/verifyemail',verifyEmail)
 authApi.post('/userlogin',userlogin)
 authApi.post('/forgotpassword',forgotPassword)
-authApi.post('/resetpassword',resetPassword)
+authApi.post('/resetpassword/:token',resetPassword)
+
 
 
 module.exports = authApi;

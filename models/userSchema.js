@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
    otp:{type:String},
    otp_expiry:{type:Date},
    is_verified:{type:Boolean,default:false},
-   resetPasswordOtp:{type:String},
+   resetPasswordToken:{type:String},
    resetPasswordOtp_expiry:{type:Date},
 },{timestamps:true})
  
