@@ -138,9 +138,24 @@ const forgotPassword = async(req,res)=>{
         responseHandler.error(res,'Interneal Server Error!')
     }
 }
+// rest password
+const resetPassword = async(req,res)=>{
+    try{
+        // get new password and token 
+        const {newPassword}=req.body
+        const {token}=req.params
+        // validate user info
+        if(!newPassword ) return responseHandler.error(res,'must provide new password',400)
+        if(!token) return responseHandler.error(res,'invalid or expired token',400)    
+    }catch(err){
+        console.log(err)
+        responseHandler.error(res,'Interneal Server Error!')
+    }
+}
 module.exports = {
     register,
     verifyEmail,
     userlogin,
     forgotPassword,
+    resetPassword,
 }

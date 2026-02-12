@@ -34,5 +34,9 @@ userSchema.pre('save',async function () {
 userSchema.methods.comparePassword = async function (enteredPassword){
   return await bcrypt.compare(enteredPassword,this.password)
 }
+userSchema.methods.verifyResetPasswordOtp = async function (resetToken){
+  const hashedToken = await crypto.createHash('sha256').update(resetToken).digest('hex')
+  return this.resetPasswordOtp === hashedToken && this.resetPasswordOtp_expiry > Date.now()
+}
 
 module.exports = mongoose.model('User',userSchema)
