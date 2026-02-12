@@ -1,5 +1,5 @@
 // libaries
-
+const crypto = require('crypto');
 const userSchema = require("../models/userSchema")
 const { generateOTP, otpExpiryTime, generateAccessToken, generateRefreshToken, generateResetPasswordToken } = require("../utilities/generators")
 const { verifyemailTemplate, restpasswordTemplate } = require("../utilities/mailTempletes")
@@ -146,7 +146,19 @@ const resetPassword = async(req,res)=>{
         const {token}=req.params
         // validate user info
         if(!newPassword ) return responseHandler.error(res,'must provide new password',400)
-        if(!token) return responseHandler.error(res,'invalid or expired token',400)    
+        if(!token) return responseHandler.error(res,'invalid or expired token',400)   
+            
+            const hashedToken = crypto.createHash('sha256').update(token).digest('hex')
+
+            const user = await userSchema.findOne({resetPasswordToken:hashedToken,resetPasswordOtp_expiry:{$gt:Date.now()}})
+            if(!user) return responseHandler.error(res,'invalid or expired token',400)
+            // update password
+            user.password = newPassword
+            user.resetPasswordToken = null
+            user.resetPasswordOtp_expiry = null
+            await user.save()
+        // all ok
+        responseHandler.success(res,201,"password reset successfully",{user})
     }catch(err){
         console.log(err)
         responseHandler.error(res,'Interneal Server Error!')
