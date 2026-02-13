@@ -6,6 +6,9 @@ const { type } = require('os');
 
 // user schema
 const userSchema = new mongoose.Schema({
+   avatar:{type:String,
+           default:'https://www.google.com/url?sa=i&url=https%3A%2F%2Fpngtree.com%2Fso%2Fuser-avatar-vector&psig=AOvVaw26HEE1r6YAIyvSFClw7tNY&ust=1761598773931000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCMCvm5PgwpADFQAAAAAdAAAAABAL'   
+          },
    fullname:{type:String,required:true},
    email:{type:String,required:true,unique:true},
    password:{type:String,required:true},

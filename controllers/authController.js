@@ -180,6 +180,19 @@ const getUserProfile = async(req,res)=>{
         responseHandler.error(res,'Interneal Server Error!')
     }
 } 
+// update user profile
+const updateUserProfile = async(req,res)=>{
+    try{
+        // get user from req.user
+        const {avatar,fullname} = req.body
+        
+        // response
+        responseHandler.success(res,200,"user profile updated successfully",{user})
+    }catch(err){
+        console.log(err)
+        responseHandler.error(res,'Interneal Server Error!')
+    }
+}
 
 module.exports = {
     register,
@@ -188,4 +201,5 @@ module.exports = {
     forgotPassword,
     resetPassword,
     getUserProfile,
+    updateUserProfile,
 }
