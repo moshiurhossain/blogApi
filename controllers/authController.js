@@ -79,6 +79,8 @@ const userlogin= async(req,res)=>{
         if(!user.is_verified) return responseHandler.error(res,'user is not verified',)
         // compare password
         const verifypassword = await user.comparePassword(password)
+        // return error if password is incorrect
+        if(!verifypassword) return responseHandler.error(res,'invalid email or password',)
         console.log(verifypassword)
         // generate access token
         const accessToken = generateAccessToken(user._id,user.email,user.role)
@@ -164,10 +166,26 @@ const resetPassword = async(req,res)=>{
         responseHandler.error(res,'Interneal Server Error!')
     }
 }
+// get user profile
+const getUserProfile = async(req,res)=>{
+    try{
+        // get user from req.user
+        const user = await userSchema.findById(req.user.id).select('-password -otp -otp_expiry -resetPasswordToken -resetPasswordOtp_expiry')
+        // return error if user not found
+        if(!user) return responseHandler.error(res,'user not found',404)
+        // response
+        responseHandler.success(res,200,"user profile fetched successfully",{user})
+    }catch(err){
+        console.log(err)
+        responseHandler.error(res,'Interneal Server Error!')
+    }
+} 
+
 module.exports = {
     register,
     verifyEmail,
     userlogin,
     forgotPassword,
     resetPassword,
+    getUserProfile,
 }
