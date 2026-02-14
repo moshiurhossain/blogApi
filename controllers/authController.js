@@ -5,6 +5,7 @@ const { generateOTP, otpExpiryTime, generateAccessToken, generateRefreshToken, g
 const { verifyemailTemplate, restpasswordTemplate } = require("../utilities/mailTempletes")
 const responseHandler = require("../utilities/responseHandler")
 const sendMail = require("../utilities/sendMail")
+const fs = require('fs')
 
 
 const register = async (req, res) => {
@@ -185,6 +186,8 @@ const updateUserProfile = async(req,res)=>{
     try{
         // get user from req.user
         const {avatar,fullname} = req.body
+
+        
         
         // response
         responseHandler.success(res,200,"user profile updated successfully",{user})
