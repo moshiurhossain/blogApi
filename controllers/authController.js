@@ -5,7 +5,8 @@ const { generateOTP, otpExpiryTime, generateAccessToken, generateRefreshToken, g
 const { verifyemailTemplate, restpasswordTemplate } = require("../utilities/mailTempletes")
 const responseHandler = require("../utilities/responseHandler")
 const sendMail = require("../utilities/sendMail")
-const fs = require('fs')
+const fs = require('fs');
+const { uploadToCloudinary } = require('../utilities/cloudinaryConfig');
 
 
 const register = async (req, res) => {
@@ -185,9 +186,11 @@ const getUserProfile = async(req,res)=>{
 const updateUserProfile = async(req,res)=>{
     try{
         // get user from req.user
-        const {avatar,fullname} = req.body
+        const {fullname} = req.body
 
-        
+        const image = await uploadToCloudinary(req.file.buffer)
+
+       console.log(image)
         
         // response
         responseHandler.success(res,200,"user profile updated successfully",{user})
