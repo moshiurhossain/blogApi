@@ -11,7 +11,7 @@ authApi.post('/userlogin',userlogin)
 authApi.post('/forgotpassword',forgotPassword)
 authApi.post('/resetpassword/:token',resetPassword)
 authApi.get('/profile',authMiddleware,getUserProfile)
-authApi.put('/updateprofile',upload.single('avatar'),updateUserProfile)
+authApi.put('/updateprofile',authMiddleware,upload.single('avatar'),updateUserProfile)
 
 
 

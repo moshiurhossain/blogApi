@@ -185,15 +185,24 @@ const getUserProfile = async(req,res)=>{
 // update user profile
 const updateUserProfile = async(req,res)=>{
     try{
+     
         // get user from req.user
         const {fullname} = req.body
-
-        const image = await uploadToCloudinary(req.file.buffer)
-
-       console.log(image)
+        const updateData = {}
+        if(fullname) updateData.fullname = fullname
         
+        if(req.file){
+        const image = await uploadToCloudinary(req.file.buffer)
+        if(image?.secure_url) updateData.avatar = image.secure_url
+                    }
+        
+        
+     
+       const user = await userSchema.findByIdAndUpdate(req.user._id,updateData,{new:true})
+       
+       console.log(user)
         // response
-        responseHandler.success(res,200,"user profile updated successfully",{user})
+        responseHandler.success(res,200,"user profile updated successfully",user)
     }catch(err){
         console.log(err)
         responseHandler.error(res,'Interneal Server Error!')
