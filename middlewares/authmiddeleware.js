@@ -5,7 +5,7 @@ const authMiddleware = (req,res,next)=>{
     try{         
             // access token name from cookies
             const token = req.cookies['accessToken'] || req.headers['authorization']?.split(' ')[1]
-            console.log('Token',token)
+        //     console.log('Token',token)
             // check if token is present
             
             if(!token) return responseHandler.error(res,'access denied, login required',401)

@@ -87,7 +87,7 @@ const userlogin= async(req,res)=>{
         // generate access token
         const accessToken = generateAccessToken(user._id,user.email,user.role)
         const refreshToken = generateRefreshToken(user._id,user.email,user.role)
-
+       // send access token in http-only cookie  
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
             secure: false,
