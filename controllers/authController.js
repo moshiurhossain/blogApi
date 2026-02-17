@@ -190,7 +190,7 @@ const updateUserProfile = async(req,res)=>{
         const {fullname} = req.body
         const updateData = {}
         if(fullname) updateData.fullname = fullname
-        
+        console.log(req.user)
         if(req.file){
         const image = await uploadToCloudinary(req.file.buffer)
         if(image?.secure_url) updateData.avatar = image.secure_url
@@ -198,9 +198,9 @@ const updateUserProfile = async(req,res)=>{
         
         
      
-       const user = await userSchema.findByIdAndUpdate(req.user._id,updateData,{new:true})
+       const user = await userSchema.findByIdAndUpdate(req.user.id,updateData,{new:true})
        
-       console.log(user)
+    
         // response
         responseHandler.success(res,200,"user profile updated successfully",user)
     }catch(err){
