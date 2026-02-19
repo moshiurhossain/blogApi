@@ -11,7 +11,10 @@ const blogSchema = new mongoose.Schema({
     type:mongoose.Schema.Types.ObjectId,
     ref:'user',
     required:true,},
-
+ isActive:{
+   type:Boolean,
+   default:false,
+ }
 
 },{timestamps:true})
 

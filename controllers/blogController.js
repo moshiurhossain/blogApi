@@ -4,7 +4,7 @@ const responseHandler = require("../utilities/responseHandler")
 const createBlog =async (req,res)=>{
     try{
         // get data from req.body
-        const{title,content}=req.body
+        const{title,content,isActive}=req.body
         // validate blog info
         if(!title || !content) return responseHandler.error(res,'must provide all information',400)
         // get author id from req.user
@@ -15,6 +15,8 @@ const createBlog =async (req,res)=>{
         title,
         content,
         author:authorid,
+        // if isActive is 'true' set it to true, otherwise set it to false
+        isActive:isActive =='true'?true:false
        })
         await blog.save()
 
