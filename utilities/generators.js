@@ -44,6 +44,20 @@ const generateResetPasswordToken =()=>{
 
     return {resetToken,refreshToken}
 }
+// slug generator
+ const generateSlug = (title) => {
+  if (!title) return "";
+
+  return title
+    .toString()
+    .normalize("NFKD")               // Normalize accents
+    .replace(/[\u0300-\u036f]/g, "") // Remove accents
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")     // Replace non-alphanumeric with hyphen
+    .replace(/-+/g, "-")             // Collapse multiple hyphens
+    .replace(/^-+|-+$/g, "");        // Trim hyphens
+};
 // Exporting the function to be used in other modules
 module.exports = {
     generateOTP,
@@ -51,4 +65,5 @@ module.exports = {
     generateAccessToken,
     generateRefreshToken,
     generateResetPasswordToken,
+    generateSlug,
 }

@@ -14,7 +14,12 @@ const blogSchema = new mongoose.Schema({
  isActive:{
    type:Boolean,
    default:false,
- }
+ },
+ slug:{
+   type:String,
+   unique:true,
+   required:true,
+ },
 
 },{timestamps:true})
 

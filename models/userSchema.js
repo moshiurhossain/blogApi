@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
    is_verified:{type:Boolean,default:false},
    resetPasswordToken:{type:String},
    resetPasswordOtp_expiry:{type:Date},
+   bloglist:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'blog',
+    default:[],
+   }]
 },{timestamps:true})
  
 
