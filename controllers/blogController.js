@@ -12,8 +12,16 @@ const createBlog =async (req,res)=>{
         // get author id from req.user
         const authorid = req.user.id
         console.log(`Author ID: ${authorid}`) 
-        
+        // generate slug from title
         const slug = generateSlug(title)
+        // check if blog with same slug already exists
+        const existingBlog = await blogSchema.findOne({slug})
+        // if blog with same slug exists return error
+        if(existingBlog) return responseHandler.error(res,'blog with this title already exists',400)
+        // check if blog with same content already exists 
+        const existingBlogContent = await blogSchema.findOne({content})
+        // if blog with same content exists return error
+        if(existingBlogContent) return responseHandler.error(res,'blog with this content already exists',400)
 
         // create blog in database
        const blog = new blogSchema({
@@ -38,6 +46,16 @@ const createBlog =async (req,res)=>{
     }
 }
 
+const getAllBlogs = async (req,res)=>{
+    try{
+        const blogs = await blogSchema.find()
+        responseHandler.success(res,200,"blogs fetched successfully",blogs)
+    }catch(err){
+        responseHandler.error(res,'Interneal Server Error!',err)
+    }
+}
+
 module.exports={
     createBlog,
+    getAllBlogs
 }
