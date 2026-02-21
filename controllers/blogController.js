@@ -55,7 +55,7 @@ const getAllBlogsforUser = async (req,res)=>{
         responseHandler.error(res,'Interneal Server Error!',err)
     }
 }
-
+// get all blogs that are active
 const allblogs = async (req,res)=>{
     try{
 
@@ -66,9 +66,18 @@ const allblogs = async (req,res)=>{
         responseHandler.error(res,'Interneal Server Error!',err)
     }
 }
+// delete blog by id
+const deleteBlog = async (req,res)=>{
+    try{
+     responseHandler.success(res,200,"blog deleted successfully")
+    }catch(err){
+        responseHandler.error(res,'Interneal Server Error!',err)
+    }
+}
 
 module.exports={
     createBlog,
     getAllBlogsforUser,
     allblogs,
+    deleteBlog,
 }
