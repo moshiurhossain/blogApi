@@ -56,7 +56,19 @@ const getAllBlogsforUser = async (req,res)=>{
     }
 }
 
+const allblogs = async (req,res)=>{
+    try{
+
+        const blogs = await blogSchema.find({isActive:true})
+        responseHandler.success(res,200,"blogs fetched successfully",blogs)
+
+    }catch(err){
+        responseHandler.error(res,'Interneal Server Error!',err)
+    }
+}
+
 module.exports={
     createBlog,
     getAllBlogsforUser,
+    allblogs,
 }
